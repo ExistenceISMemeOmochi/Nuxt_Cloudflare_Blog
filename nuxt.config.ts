@@ -1,14 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  // **--- 1. 静的サイト生成 (SSG) のための設定 ---**
+  // **--- 1. Cloudflare Pages用SSR設定 ---**
   
-  // SSRを無効にしてSPAモードに
-  ssr: false,
-
-  // Nitroの設定: ビルド時に静的ファイルを生成するよう指示
-  // Cloudflare PagesのSSGに最適
+  // Nitroの設定: Cloudflare PagesのPages Functionsを使ってSSR
   nitro: {
-    preset: 'static',
+    preset: 'cloudflare-pages',
     // ↓ 💡 新しく追加/修正する設定
     prerender: {
       // リンクのクロールも有効にして、確実に全ページを生成
