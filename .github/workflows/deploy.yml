@@ -1,31 +1,63 @@
-name: Deploy to Cloudflare Pages
+name: Deploy Nuxt Blog to Cloudflare Pages - Dist
 
+# 以下のイベントが発生したときにワークフローを実行
 on:
   push:
-    branches: [ main ]
-  workflow_run:
-    workflows: ["CI"]
-    types:
-      - completed
+    branches: [ main ] # mainブランチへのプッシュ時
 
+# --------------------------
+# 1. build ジョブ (CIとビルド)
+# --------------------------
 jobs:
-  deploy:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+  build:
     runs-on: ubuntu-latest
+    
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js 20.x
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm'
+          
       - name: Install dependencies
         run: npm ci
-      - name: Build
+        
+      # Nuxtのビルドを実行 (カスタム設定により、出力は dist/ になることを想定)
+      - name: Build Nuxt Application
         run: npm run build
+        
+      # ビルド成果物 (静的ファイル) を次のジョブに引き渡すためにアップロード
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuxt-dist
+          path: dist # 💡 ここを 'dist' に変更
+          retention-days: 1
+
+  # --------------------------
+  # 2. deploy ジョブ
+  # --------------------------
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build 
+    
+    steps:
+      # buildジョブでアップロードされた成果物をダウンロード
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: nuxt-dist
+          path: dist # 💡 ここを 'dist' に変更
+
+      # Cloudflare Pagesへデプロイ
       - name: Publish to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: nuxt-cloudflare-blog
-          directory: dist
+          directory: dist # 💡 ここを 'dist' に変更
+          # branch: ${{ github.ref_name }} # 必要に応じてブランチ指定
