@@ -6,15 +6,20 @@ export default defineNuxtConfig({
   // Cloudflare PagesのSSGに最適
   nitro: {
     preset: 'static',
+    // ↓ 💡 新しく追加/修正する設定
+    prerender: {
+      // リンクのクロールも有効にして、確実に全ページを生成
+      crawlLinks: true,
+    }
   },
 
   // **--- 2. モジュール設定 (変更なし) ---**
 
   modules: [
-    '@nuxt/content', // ブログ構築に必須
+    '@nuxt/content',
     '@nuxt/eslint',
-    '@nuxt/image',   // 画像最適化に必須
-    '@nuxt/ui',      // UI構築に便利
+    '@nuxt/image',
+    '@nuxt/ui',
   ],
   
   // **--- 3. 開発・互換性設定 (変更なし) ---**
