@@ -1,0 +1,31 @@
+// https://nuxt.com/docs/api/configuration/nuxt-config
+export default defineNuxtConfig({
+  // **--- 1. Cloudflare Pages用SSR設定 ---**
+  
+  // Nitroの設定: Cloudflare PagesのPages Functionsを使ってSSR
+  nitro: {
+    preset: 'cloudflare-pages',
+    // ↓ 💡 新しく追加/修正する設定
+    prerender: {
+      // リンクのクロールも有効にして、確実に全ページを生成
+      crawlLinks: true,
+    }
+  },
+
+  // **--- 2. モジュール設定 (変更なし) ---**
+
+  modules: [
+    '@nuxt/content',
+    '@nuxt/eslint',
+    '@nuxt/image',
+    '@nuxt/ui',
+  ],
+  
+  // **--- 3. 開発・互換性設定 (変更なし) ---**
+
+  devtools: { enabled: true },
+  future: {
+    compatibilityVersion: 4,
+  },
+  compatibilityDate: '2024-04-03',
+})

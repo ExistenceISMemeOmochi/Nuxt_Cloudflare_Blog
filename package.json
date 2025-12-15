@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "vuecfpages",
   "private": true,
   "version": "0.0.0",
@@ -14,5 +15,25 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.1",
     "vite": "^7.2.4"
+=======
+  "name": "Nuxt_CF_pages",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview"
+  },
+  "dependencies": {
+    "@nuxt/content": "^3.9.0",
+    "@nuxt/eslint": "^1.12.1",
+    "@nuxt/image": "^2.0.0",
+    "@nuxt/ui": "^4.2.1",
+    "better-sqlite3": "^12.5.0",
+    "eslint": "^9.39.2",
+    "nuxt": "^4.2.2",
+    "typescript": "^5.9.3"
+>>>>>>> 09f3ff2b6482d30be5d438cf5f315233b6426e5e
   }
 }
