@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   // Nitroの設定: ビルド時に静的ファイルを生成するよう指示
   // Cloudflare PagesのSSGに最適
   nitro: {
-    preset: 'static',
+    preset: 'cloudflare-pages',
     // ↓ 💡 新しく追加/修正する設定
     prerender: {
       // リンクのクロールも有効にして、確実に全ページを生成
