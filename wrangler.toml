@@ -6,3 +6,7 @@ pages_build_output_dir = "dist"
 binding = "DB"
 database_name = "blog-db"
 database_id = "8b3d3733-28a4-455f-bfe8-0a7400ad86fe"
+
+[assets]
+directory = "./dist"
+not_found_handling = "single-page-application"
